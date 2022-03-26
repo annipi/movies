@@ -1,14 +1,13 @@
 {
   "ids": {
-    "User": 8,
-    "Movie": 2
+    "User": 1,
+    "Movie": 1
   },
   "models": {
     "User": {
-      "999": "{\"id\":999,\"email\":\"admin@mail.com\",\"password\":\"$2a$08$UZAqXBYp8kpTDXT3MhNwD.H9ZoavW4CHm76SNLfedPsNQwbM3XRo2\",\"name\":\"Admin\",\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDgzMDQ5ODkuMDQ4LCJkYXRhIjp7ImlkIjo5OTksImVtYWlsIjoiYWRtaW5AbWFpbC5jb20ifSwiaWF0IjoxNjQ4MzAzODMyfQ.KYgpW29Ek8PESaAmNrqOpkm_S_SXtvpsFI5VPd1M33M\"}"
+      "999": "{\"id\":999,\"email\":\"admin@mail.com\",\"password\":\"$2a$08$UZAqXBYp8kpTDXT3MhNwD.H9ZoavW4CHm76SNLfedPsNQwbM3XRo2\",\"name\":\"Admin\",\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDgzMDk0MTQuNjg0LCJkYXRhIjp7ImlkIjo5OTksImVtYWlsIjoiYWRtaW5AbWFpbC5jb20ifSwiaWF0IjoxNjQ4MzA4MzU2fQ.NOcxUPJusaK6r5mMQUD8xTE06wsymrR1RTIcBliOyKA\"}"
     },
     "Movie": {
-      "1": "{\"title\":\"Los Otros\",\"director\":\"Alejandro Amenábar\",\"cast\":[],\"synopsis\":\"Isla de Jersey, 1945. La Segunda Guerra Mundial ha terminado, pero el marido de Grace (Nicole Kidman) no vuelve. Sola en un aislado caserón victoriano de la isla de Jersey, educa a sus hijos dentro de rígidas normas religiosas. Los niños sufren una extraña enfermedad: no pueden recibir directamente la luz del día. Los tres nuevos sirvientes que se incorporan a la vida familiar deben aprender una regla vital: la casa estará siempre en penumbra, y nunca se abrirá una puerta si no se ha cerrado la anterior. Pero el estricto orden que Grace ha impuesto se verá desafiado por circunstancias que escapan a su control.\",\"duration\":104,\"year\":2001,\"genre\":\"Terror\",\"userId\":999,\"id\":1}",
       "995": {
         "id": 995,
         "title": "Beetlejuice",

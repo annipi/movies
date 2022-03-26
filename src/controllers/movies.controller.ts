@@ -1,11 +1,7 @@
 /* eslint @typescript-eslint/naming-convention: 0 */
 import {
-  Count,
-  CountSchema,
   Filter,
-  FilterExcludingWhere,
   repository,
-  Where,
 } from '@loopback/repository';
 import {
   post,
@@ -23,6 +19,20 @@ import {MovieRepository, UserRepository} from '../repositories';
 import {SessionService} from '../services';
 import {service} from '@loopback/core';
 
+const httpErrorSchema = {
+  type: 'object',
+  title: 'HttpError',
+  properties: {
+    error: {
+      properties: {
+        statusCode: {type: 'number'},
+        name: {type: 'string'},
+        message: {type: 'string'},
+      },
+    },
+  },
+};
+
 export class MoviesController {
   constructor(
     @repository(MovieRepository)
@@ -33,10 +43,24 @@ export class MoviesController {
     public sessionService : SessionService,
   ) {}
 
-  @post('/movies')
-  @response(200, {
-    description: 'Movie model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Movie)}},
+  @post('/movies', {
+    responses: {
+      '200': {
+        description: 'Successfully created new movie',
+        content: {
+          'application/json': {
+            schema: getModelSchemaRef(Movie, {
+              title: 'MovieCreated',
+              exclude: ['isPublic'],
+            }),
+          },
+        },
+      },
+      '401': {
+        description: 'The given token has expired',
+        content: { 'application/json': { schema: httpErrorSchema } },
+      },
+    },
   })
   async create(
     @param.header.string('token') token: typeof User.prototype.token,
@@ -45,7 +69,7 @@ export class MoviesController {
         'application/json': {
           schema: getModelSchemaRef(Movie, {
             title: 'NewMovie',
-            exclude: ['id', 'userId'],
+            exclude: ['id', 'userId', 'isPublic'],
           }),
         },
       },
@@ -53,14 +77,13 @@ export class MoviesController {
     movie: Omit<Movie, 'id'>,
   ): Promise<Movie> {
     if(token) {
+      movie.isPublic = false;
       const logInUser = await this.userRepository.findUserByToken(token);
-      if(logInUser?.id) {
-        movie.userId = logInUser.id;
-      }
+      if(logInUser?.id) movie.userId = logInUser.id;
       if (this.sessionService.validToken(token))
         return this.movieRepository.create(movie);
-      else throw new HttpErrors[401]("Session expired invalid token");
-    } else throw new HttpErrors[401]("you must pass a token in order to add new movies");
+      else throw new HttpErrors[401]('Session expired invalid token');
+    } else throw new HttpErrors[401]('you must provide a token in to add new movies');
   }
 
   @get('/movies')
@@ -89,50 +112,20 @@ export class MoviesController {
     return publicMovies;
   }
 
-  @patch('/movies')
-  @response(200, {
-    description: 'Movie PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
-  })
-  async updateAll(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Movie, {partial: true}),
-        },
+  @patch('/movies/{id}', {
+    responses: {
+      '200': {
+        description: 'Successfully deleted movie with id',
       },
-    })
-    movie: Movie,
-    @param.header.string('token') token: typeof User.prototype.token,
-    @param.where(Movie) where?: Where<Movie>,
-  ): Promise<Count> {
-    if (this.sessionService.validToken(token))
-      return this.movieRepository.updateAll(movie, where);
-    else throw new HttpErrors[401]("Session expired invalid token");
-  }
-
-  @get('/movies/{id}')
-  @response(200, {
-    description: 'Movie model instance',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(Movie, {includeRelations: true}),
+      '401': {
+        description: 'User not authorized',
+        content: {'application/json': {schema: httpErrorSchema}},
+      },
+      '404': {
+        description: 'Data not found',
+        content: {'application/json': {schema: httpErrorSchema}},
       },
     },
-  })
-  async findById(
-    @param.header.string('token') token: typeof User.prototype.token,
-    @param.path.number('id') id: number,
-    @param.filter(Movie, {exclude: 'where'}) filter?: FilterExcludingWhere<Movie>
-  ): Promise<Movie> {
-    if (this.sessionService.validToken(token))
-      return this.movieRepository.findById(id, filter);
-    else throw new HttpErrors[401]("Session expired invalid token");
-  }
-
-  @patch('/movies/{id}')
-  @response(204, {
-    description: 'Movie PATCH success',
   })
   async updateById(
     @param.header.string('token') token: typeof User.prototype.token,
@@ -140,41 +133,60 @@ export class MoviesController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Movie, {partial: true}),
+          schema: getModelSchemaRef(Movie, {
+            partial: true,
+            title: 'MovieToChange',
+            exclude: ['id', 'userId', 'isPublic'],
+          }),
         },
       },
     })
     movie: Movie,
   ): Promise<void> {
-    if (this.sessionService.validToken(token))
-      await this.movieRepository.updateById(id, movie);
-    else throw new HttpErrors[401]("Session expired invalid token");
+    if (token) {
+      const logInUser = await this.userRepository.findUserByToken(token);
+      const movieById = await this.movieRepository.findById(id);
+      if (!movieById) throw new HttpErrors[404]('Movie id does not exist');
+      if (logInUser) {
+        if (this.sessionService.validToken(token)) {
+          if (logInUser.id === movieById.userId)
+            await this.movieRepository.updateById(id, movie);
+          else throw new HttpErrors[401]('You are not allowed to delete this movie');
+        } else throw new HttpErrors[401]('Session expired invalid token');
+      } else throw new HttpErrors[404]('User not found invalid token');
+    } else throw new HttpErrors[401]('You must provide a token in to update a movie');
   }
 
-  @put('/movies/{id}')
-  @response(204, {
-    description: 'Movie PUT success',
-  })
-  async replaceById(
-    @param.header.string('token') token: typeof User.prototype.token,
-    @param.path.number('id') id: number,
-    @requestBody() movie: Movie,
-  ): Promise<void> {
-    if (this.sessionService.validToken(token))
-      await this.movieRepository.replaceById(id, movie);
-    else throw new HttpErrors[401]("Session expired invalid token");
-  }
-
-  @del('/movies/{id}')
-  @response(204, {
-    description: 'Movie DELETE success',
+  @del('/movies/{id}', {
+    responses: {
+      '200': {
+        description: 'Successfully deleted movie with id',
+      },
+      '401': {
+        description: 'User not authorized',
+        content: {'application/json': {schema: httpErrorSchema}},
+      },
+      '404': {
+        description: 'Data not found',
+        content: {'application/json': {schema: httpErrorSchema}},
+      },
+    },
   })
   async deleteById(
     @param.header.string('token') token: typeof User.prototype.token,
-    @param.path.number('id') id: number
+    @param.path.number('id') id: number,
   ): Promise<void> {
-    if (this.sessionService.validToken(token))
-      await this.movieRepository.deleteById(id);
-    else throw new HttpErrors[401]("Session expired invalid token");
+    if (token) {
+      const logInUser = await this.userRepository.findUserByToken(token);
+      const movieById = await this.movieRepository.findById(id);
+      if (!movieById) throw new HttpErrors[404]('Movie id does not exist');
+      if (logInUser) {
+        if (this.sessionService.validToken(token)) {
+          if (logInUser.id === movieById.userId)
+            await this.movieRepository.deleteById(id);
+          else throw new HttpErrors[401]('You are not allowed to delete this movie');
+        } else throw new HttpErrors[401]('Session expired invalid token');
+      } else throw new HttpErrors[404]('User not found invalid token');
+    } else throw new HttpErrors[401]('You must provide a token to delete a movie');
   }
 }

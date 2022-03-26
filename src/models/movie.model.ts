@@ -24,7 +24,7 @@ export class Movie extends Entity {
 
   @property({
     type: 'array',
-    itemType: 'object',
+    itemType: 'string',
   })
   cast?: string[];
 
