@@ -1,0 +1,47 @@
+{
+  "ids": {
+    "User": 4
+  },
+  "models": {
+    "User": {
+      "999": "{\"id\":999,\"email\":\"admin@mail.com\",\"password\":\"$2a$08$NHkuiXaSqtaRfPdZ2byDaurV0TCDUHaLThTJuCQlLxpXZAB4sypLm\",\"name\":\"Admin\",\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDgyODc5NTYuMjc2LCJkYXRhIjp7ImlkIjo5OTksImVtYWlsIjoiYWRtaW5AbWFpbC5jb20ifSwiaWF0IjoxNjQ4Mjg2Nzc4fQ.8pGcm1lNKggCMbDLOZnn888-efIDusdcX04_gnZw54I\"}"
+    },
+    "Movie": {
+      "999": {
+        "id": 999,
+        "title": "Beetlejuice",
+        "director": "Tim Burton",
+        "cast": [
+          "Michael Keaton",
+          "Alec Baldwin",
+          "Geena Davis",
+          "Winona Ryder",
+          "Jeffrey Jones",
+          "Annie McEnroe",
+          "Sylvia Sidney",
+          "Glenn Shadix",
+          "Catherine O'Hara",
+          "Hugo Stanger",
+          "Mark Ettlinger",
+          "J. Jay Saunders",
+          "Patrice Martinez",
+          "Carmen Filpi",
+          "Douglas Turner Ward",
+          "Simmy Bow",
+          "Cindy Daly",
+          "Maree Cheatham",
+          "Duane Davis",
+          "Tony Cox",
+          "Dick Cavett",
+          "Robert Goulet",
+          "Gary Jochimsen",
+          "Adelle Lutz",
+          "Susan Kellermann"
+        ],
+        "synopsis": "Un matrimonio de fantasmas (Geena Davis y Alec Baldwin) contrata los servicios de Bitelchus (Michael Keaton), un especialista en asustar mortales, para que ahuyente a los nuevos propietarios de su querida casa Victoriana.",
+        "duration": 92,
+        "year": 1988
+      }
+    }
+  }
+}
