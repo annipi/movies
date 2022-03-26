@@ -1,16 +1,16 @@
 {
   "ids": {
-    "User": 7
+    "User": 8,
+    "Movie": 2
   },
   "models": {
     "User": {
-      "5": "{\"email\":\"anni@mail.com\",\"password\":\"$2a$08$i2h6mYIf1Mwe0BbIIv5Fw.gptaeNGOa/y6s/BFEk3Wp.Nhw2Aicaa\",\"name\":\"Anni\",\"id\":5}",
-      "6": "{\"email\":\"ani@mail.com\",\"password\":\"$2a$08$3BzwCH6MoyPAEFJTp.5vWO9DCWlUyjvDrtyYryYJOxrFI043bf5aO\",\"name\":\"Anni\",\"id\":6}",
-      "999": "{\"id\":999,\"email\":\"admin@mail.com\",\"password\":\"$2a$08$NHkuiXaSqtaRfPdZ2byDaurV0TCDUHaLThTJuCQlLxpXZAB4sypLm\",\"name\":\"Admin\",\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDgyOTE4ODEuNTgxLCJkYXRhIjp7ImlkIjo5OTksImVtYWlsIjoiYWRtaW5AbWFpbC5jb20ifSwiaWF0IjoxNjQ4MjkwNzE2fQ.cq5jdZzMJnokC4ncS6eufT9T18h7rlvaZBrN_zDo7NM\"}"
+      "999": "{\"id\":999,\"email\":\"admin@mail.com\",\"password\":\"$2a$08$UZAqXBYp8kpTDXT3MhNwD.H9ZoavW4CHm76SNLfedPsNQwbM3XRo2\",\"name\":\"Admin\",\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDgzMDQ5ODkuMDQ4LCJkYXRhIjp7ImlkIjo5OTksImVtYWlsIjoiYWRtaW5AbWFpbC5jb20ifSwiaWF0IjoxNjQ4MzAzODMyfQ.KYgpW29Ek8PESaAmNrqOpkm_S_SXtvpsFI5VPd1M33M\"}"
     },
     "Movie": {
-      "990": {
-        "id": 990,
+      "1": "{\"title\":\"Los Otros\",\"director\":\"Alejandro Amenábar\",\"cast\":[],\"synopsis\":\"Isla de Jersey, 1945. La Segunda Guerra Mundial ha terminado, pero el marido de Grace (Nicole Kidman) no vuelve. Sola en un aislado caserón victoriano de la isla de Jersey, educa a sus hijos dentro de rígidas normas religiosas. Los niños sufren una extraña enfermedad: no pueden recibir directamente la luz del día. Los tres nuevos sirvientes que se incorporan a la vida familiar deben aprender una regla vital: la casa estará siempre en penumbra, y nunca se abrirá una puerta si no se ha cerrado la anterior. Pero el estricto orden que Grace ha impuesto se verá desafiado por circunstancias que escapan a su control.\",\"duration\":104,\"year\":2001,\"genre\":\"Terror\",\"userId\":999,\"id\":1}",
+      "995": {
+        "id": 995,
         "title": "Beetlejuice",
         "director": "Tim Burton",
         "cast": [
@@ -42,88 +42,67 @@
         ],
         "synopsis": "Un matrimonio de fantasmas (Geena Davis y Alec Baldwin) contrata los servicios de Bitelchus (Michael Keaton), un especialista en asustar mortales, para que ahuyente a los nuevos propietarios de su querida casa Victoriana.",
         "duration": 92,
-        "year": 1988
-      },
-      "991": {
-        "id": 991,
-        "title": "",
-        "director": "",
-        "cast": [],
-        "synopsis": "",
-        "duration": 0,
-        "year": 0
-      },
-      "992": {
-        "id": 992,
-        "title": "",
-        "director": "",
-        "cast": [],
-        "synopsis": "",
-        "duration": 0,
-        "year": 0
-      },
-      "993": {
-        "id": 993,
-        "title": "",
-        "director": "",
-        "cast": [],
-        "synopsis": "",
-        "duration": 0,
-        "year": 0
-      },
-      "994": {
-        "id": 994,
-        "title": "",
-        "director": "",
-        "cast": [],
-        "synopsis": "",
-        "duration": 0,
-        "year": 0
-      },
-      "995": {
-        "id": 995,
-        "title": "",
-        "director": "",
-        "cast": [],
-        "synopsis": "",
-        "duration": 0,
-        "year": 0
+        "year": 1988,
+        "isPublic": true
       },
       "996": {
         "id": 996,
-        "title": "",
-        "director": "",
-        "cast": [],
-        "synopsis": "",
-        "duration": 0,
-        "year": 0
+        "title": "Bastardos sin gloria",
+        "director": "Quentin Tarantino",
+        "cast": [
+          "Brad Pitt",
+          "Christoph Waltz",
+          "Mélanie Laurent",
+          "Diane Kruger",
+          "Michael Fassbender",
+          "Daniel Brühl",
+          "Eli Roth",
+          "Til Schweiger",
+          "B.J. Novak",
+          "August Diehl",
+          "Mike Myers"
+        ],
+        "synopsis": "Segunda Guerra Mundial (1939-1945). En la Francia ocupada por los alemanes, Shosanna Dreyfus (Mélanie Laurent) presencia la ejecución de su familia por orden del coronel Hans Landa (Christoph Waltz). Después de huir a París, adopta una nueva identidad como propietaria de un cine. En otro lugar de Europa, el teniente Aldo Raine (Brad Pitt) adiestra a un grupo de soldados judíos (\"The Basterds\") para atacar objetivos concretos. Los hombres de Raine y una actriz alemana (Diane Kruger), que trabaja para los aliados, deben llevar a cabo una misión para hacer caer a los jefes del Tercer Reich. El destino quiere que todos se encuentren bajo la marquesina de un cine donde Shosanna espera para vengarse. ",
+        "duration": 146,
+        "year": 2009,
+        "isPublic": true
       },
       "997": {
         "id": 997,
-        "title": "",
-        "director": "",
-        "cast": [],
-        "synopsis": "",
-        "duration": 0,
-        "year": 0
+        "title": "Efecto mariposa",
+        "director": "Eric Bress, J. Mackye Gruber",
+        "cast": [
+          "Ashton Kutcher"
+        ],
+        "synopsis": "Evan Treborn, un joven que se está esforzando por superar unos dolorosos recuerdos de su infancia, descubre una técnica que le permite viajar atrás en el tiempo y ocupar su cuerpo de niño para poder cambiar el curso de su dolorosa historia. Sin embargo también descubre que cualquier mínimo cambio en el pasado altera enormemente su futuro.",
+        "duration": 113,
+        "year": 2004,
+        "isPublic": true
       },
       "998": {
         "id": 998,
-        "title": "",
-        "director": "",
-        "cast": [],
-        "synopsis": "",
-        "duration": 0,
-        "year": 0
+        "title": "Pulp fiction",
+        "director": "Quentin Tarantino",
+        "cast": [
+          "John Travolta",
+          "Samuel L. Jackson",
+          "Uma Thurman",
+          "Bruce Willis"
+        ],
+        "synopsis": "Jules y Vincent, dos asesinos a sueldo con no demasiadas luces, trabajan para el gángster Marsellus Wallace. Vincent le confiesa a Jules que Marsellus le ha pedido que cuide de Mia, su atractiva mujer. Jules le recomienda prudencia porque es muy peligroso sobrepasarse con la novia del jefe. Cuando llega la hora de trabajar, ambos deben ponerse \"manos a la obra\". Su misión: recuperar un misterioso maletín.",
+        "duration": 153,
+        "year": 1994,
+        "isPublic": true
       },
       "999": {
         "id": 999,
-        "title": "",
-        "director": "",
+        "title": "Pesadilla antes de navidad",
+        "director": "Henry Selick",
         "cast": [],
-        "synopsis": "",
-        "duration": 0,
-        "year": 0
+        "synopsis": "Cuando Jack Skellington, el Señor de Halloween, descubre la Navidad, se queda fascinado y decide mejorarla. Sin embargo, su visión de la festividad es totalmente contraria al espíritu navideño. Sus planes incluyen el secuestro de Santa Claus y la introducción de cambios bastante macabros. Sólo su novia Sally es consciente del error que está cometiendo.",
+        "duration": 75,
+        "year": 1993,
+        "isPublic": true
       }
     }
   }

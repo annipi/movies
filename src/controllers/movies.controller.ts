@@ -19,7 +19,7 @@ import {
   response, HttpErrors,
 } from '@loopback/rest';
 import {Movie, User} from '../models';
-import {MovieRepository} from '../repositories';
+import {MovieRepository, UserRepository} from '../repositories';
 import {SessionService} from '../services';
 import {service} from '@loopback/core';
 
@@ -27,6 +27,8 @@ export class MoviesController {
   constructor(
     @repository(MovieRepository)
     public movieRepository : MovieRepository,
+    @repository(UserRepository)
+    public userRepository : UserRepository,
     @service(SessionService)
     public sessionService : SessionService,
   ) {}
@@ -43,16 +45,22 @@ export class MoviesController {
         'application/json': {
           schema: getModelSchemaRef(Movie, {
             title: 'NewMovie',
-            exclude: ['id'],
+            exclude: ['id', 'userId'],
           }),
         },
       },
     })
     movie: Omit<Movie, 'id'>,
   ): Promise<Movie> {
-    if (this.sessionService.validToken(token))
-      return this.movieRepository.create(movie);
-    else throw new HttpErrors[401]("Session expired invalid token");
+    if(token) {
+      const logInUser = await this.userRepository.findUserByToken(token);
+      if(logInUser?.id) {
+        movie.userId = logInUser.id;
+      }
+      if (this.sessionService.validToken(token))
+        return this.movieRepository.create(movie);
+      else throw new HttpErrors[401]("Session expired invalid token");
+    } else throw new HttpErrors[401]("you must pass a token in order to add new movies");
   }
 
   @get('/movies')
@@ -68,9 +76,17 @@ export class MoviesController {
     },
   })
   async find(
+    @param.header.string('token') token?: typeof User.prototype.token,
     @param.filter(Movie) filter?: Filter<Movie>,
   ): Promise<Movie[]> {
-    return this.movieRepository.find(filter);
+    const publicMovies = await this.movieRepository.findPublic();
+    if(token) {
+      const logInUser = await this.userRepository.findUserByToken(token);
+      if (logInUser) {
+        return this.movieRepository.find();
+      } else return publicMovies;
+    }
+    return publicMovies;
   }
 
   @patch('/movies')

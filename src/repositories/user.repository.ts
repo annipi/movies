@@ -12,4 +12,8 @@ export class UserRepository extends DefaultCrudRepository<
   constructor(@inject('datasources.db') dataSource: DbDatasource) {
     super(User, dataSource);
   }
+
+  findUserByToken(token: string) : Promise<User | null> {
+    return this.findOne({ where: { token: token }});
+  }
 }

@@ -49,6 +49,11 @@ export class Movie extends Entity {
   })
   genre: number;
 
+  @property({
+    type: 'boolean',
+  })
+  isPublic: boolean;
+
   @belongsTo(() => User)
   userId: number;
 

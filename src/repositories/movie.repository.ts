@@ -17,4 +17,8 @@ export class MovieRepository extends DefaultCrudRepository<
     this.user = this.createBelongsToAccessorFor('user', userRepositoryGetter,);
     this.registerInclusionResolver('user', this.user.inclusionResolver);
   }
+
+  findPublic() : Promise<Movie[]>{
+    return this.find({ where: { isPublic: true } });
+  }
 }
