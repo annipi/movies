@@ -1,15 +1,15 @@
 {
   "ids": {
-    "User": 1,
-    "Movie": 1
+    "User": 2,
+    "Movie": 5
   },
   "models": {
     "User": {
-      "999": "{\"id\":999,\"email\":\"admin@mail.com\",\"password\":\"$2a$08$UZAqXBYp8kpTDXT3MhNwD.H9ZoavW4CHm76SNLfedPsNQwbM3XRo2\",\"name\":\"Admin\",\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDgzMDk0MTQuNjg0LCJkYXRhIjp7ImlkIjo5OTksImVtYWlsIjoiYWRtaW5AbWFpbC5jb20ifSwiaWF0IjoxNjQ4MzA4MzU2fQ.NOcxUPJusaK6r5mMQUD8xTE06wsymrR1RTIcBliOyKA\"}"
+      "1": "{\"id\":1,\"email\":\"admin@mail.com\",\"password\":\"$2a$08$UZAqXBYp8kpTDXT3MhNwD.H9ZoavW4CHm76SNLfedPsNQwbM3XRo2\",\"name\":\"Admin\",\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDgzMTA1MzguNzE0LCJkYXRhIjp7ImlkIjo5OTksImVtYWlsIjoiYWRtaW5AbWFpbC5jb20ifSwiaWF0IjoxNjQ4MzEwOTAyfQ.yvGPThXiqTyxTovwlI_RdOOVKl3n80P3VsTw9ZWJCM0\"}"
     },
     "Movie": {
-      "995": {
-        "id": 995,
+      "1": {
+        "id": 1,
         "title": "Beetlejuice",
         "director": "Tim Burton",
         "cast": [
@@ -44,8 +44,8 @@
         "year": 1988,
         "isPublic": true
       },
-      "996": {
-        "id": 996,
+      "2": {
+        "id": 2,
         "title": "Bastardos sin gloria",
         "director": "Quentin Tarantino",
         "cast": [
@@ -66,8 +66,8 @@
         "year": 2009,
         "isPublic": true
       },
-      "997": {
-        "id": 997,
+      "3": {
+        "id": 3,
         "title": "Efecto mariposa",
         "director": "Eric Bress, J. Mackye Gruber",
         "cast": [
@@ -78,8 +78,8 @@
         "year": 2004,
         "isPublic": true
       },
-      "998": {
-        "id": 998,
+      "4": {
+        "id": 4,
         "title": "Pulp fiction",
         "director": "Quentin Tarantino",
         "cast": [
@@ -93,8 +93,8 @@
         "year": 1994,
         "isPublic": true
       },
-      "999": {
-        "id": 999,
+      "5": {
+        "id": 5,
         "title": "Pesadilla antes de navidad",
         "director": "Henry Selick",
         "cast": [],
