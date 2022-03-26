@@ -1,7 +1,7 @@
 {
   "name": "movies",
   "version": "0.0.1",
-  "description": "movies",
+  "description": "HTTP server API that allows registered users to CRUD movies",
   "keywords": [
     "loopback-application",
     "loopback"
@@ -38,10 +38,10 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/annipi/movies.git"
   },
-  "author": "Anni Piragauta <aapiragautau@unal.edu.co>",
-  "license": "",
+  "author": "Anni Piragauta <anni.apu@gmail.com>",
+  "license": "MIT",
   "files": [
     "README.md",
     "dist",

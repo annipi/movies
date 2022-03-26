@@ -1,20 +1,8 @@
 /* eslint @typescript-eslint/naming-convention: 0 */
-import {
-  Count,
-  CountSchema,
-  Filter,
-  FilterExcludingWhere,
-  repository,
-  Where,
-} from '@loopback/repository';
+import {repository} from '@loopback/repository';
 import {
   post,
-  param,
-  get,
   getModelSchemaRef,
-  patch,
-  put,
-  del,
   requestBody,
   response, HttpErrors,
 } from '@loopback/rest';
@@ -31,10 +19,10 @@ const httpErrorSchema = {
       properties: {
         statusCode: {type: 'number'},
         name: {type: 'string'},
-        message: {type: 'string'}
-      }
-    }
-  }
+        message: {type: 'string'},
+      },
+    },
+  },
 };
 
 export class UserController {
@@ -47,11 +35,23 @@ export class UserController {
     public sessionService : SessionService,
   ) {}
 
-  @post('/register')
-  @response(200, {
-    description: 'User registered successfully',
-    content: {'application/json': {schema: getModelSchemaRef(User)}},
+  @post('/register', {
+    responses: {
+      '200': {
+        description: 'User registered successfully',
+        content: {'application/json': {schema: getModelSchemaRef(User)}},
+      },
+      '400': {
+        description: 'Some of the values of the request are not valid',
+        content: { 'application/json': { schema: httpErrorSchema } },
+      },
+      '409': {
+        description: 'Conflict with the actual state of the server',
+        content: { 'application/json': { schema: httpErrorSchema } },
+      },
+    },
   })
+  @response(200 )
   async create(
     @requestBody({
       content: {
@@ -65,95 +65,24 @@ export class UserController {
     })
     user: Omit<User, 'id'>,
   ): Promise<User> {
+    if (!user.email.match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    ))
+      throw new HttpErrors[400]('Not valid email address');
+    if(await this.userRepository.findOne({ where: { email: user.email } })) {
+      throw new HttpErrors[409]('The email address already exists');
+    }
+    if(this.invalidPassword(user.password))
+      throw new HttpErrors[400]('Password must contains at least 10' +
+        'characters, one lower case letter, one uppercase letter and one of' +
+        'the following characters !, @, #, ?, ]');
     user.password = this.sessionService.encryptPassword(user);
     return this.userRepository.create(user);
   }
 
-  @get('/users/count')
-  @response(200, {
-    description: 'User count returned successfully',
-    content: {'application/json': {schema: CountSchema}},
-  })
-  async count(
-    @param.where(User) where?: Where<User>,
-  ): Promise<Count> {
-    return this.userRepository.count(where);
-  }
-
-  @get('/users')
-  @response(200, {
-    description: 'Array of User model instances',
-    content: {
-      'application/json': {
-        schema: {
-          type: 'array',
-          items: getModelSchemaRef(User, {includeRelations: true}),
-        },
-      },
-    },
-  })
-  async find(
-    @param.filter(User) filter?: Filter<User>,
-  ): Promise<User[]> {
-    return this.userRepository.find(filter);
-  }
-
-  @get('/users/{id}')
-  @response(200, {
-    description: 'User model instance',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(User, {includeRelations: true}),
-      },
-    },
-  })
-  async findById(
-    @param.path.number('id') id: number,
-    @param.filter(User, {exclude: 'where'}) filter?: FilterExcludingWhere<User>
-  ): Promise<User> {
-    return this.userRepository.findById(id, filter);
-  }
-
-  @patch('/users/{id}')
-  @response(204, {
-    description: 'User PATCH success',
-  })
-  async updateById(
-    @param.path.number('id') id: number,
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(User, {partial: true}),
-        },
-      },
-    })
-    user: User,
-  ): Promise<void> {
-    await this.userRepository.updateById(id, user);
-  }
-
-  @put('/users/{id}')
-  @response(204, {
-    description: 'User PUT success',
-  })
-  async replaceById(
-    @param.path.number('id') id: number,
-    @requestBody() user: User,
-  ): Promise<void> {
-    await this.userRepository.replaceById(id, user);
-  }
-
-  @del('/users/{id}')
-  @response(204, {
-    description: 'User DELETE success',
-  })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
-    await this.userRepository.deleteById(id);
-  }
-
   @post('/login', {
     responses: {
-      "200": {
+      '200': {
         description: 'Correct credentials access to the server for 20 min',
         content: {
           'application/json': {
@@ -161,22 +90,25 @@ export class UserController {
               type: 'object',
               title: 'Credentials',
               properties: {
-                email: { type: 'string' },
-                token: { type: 'string' }
-              }
-            }
-          }
+                token: { type: 'string' },
+              },
+            },
+          },
         },
       },
-      "404": {
-        description: 'The given password does not match with the email',
-        content: { 'application/json': { schema: httpErrorSchema } },
-      },
-      "401": {
+      '401': {
         description: 'The given email was not found on the database',
         content: { 'application/json': { schema: httpErrorSchema } },
       },
-    }
+      '400': {
+        description: 'Some of the values of the request are not valid',
+        content: { 'application/json': { schema: httpErrorSchema } },
+      },
+      '404': {
+        description: 'The given password does not match with the email',
+        content: { 'application/json': { schema: httpErrorSchema } },
+      },
+    },
   })
   async login(
     @requestBody({
@@ -187,13 +119,19 @@ export class UserController {
             title: 'Credential',
             properties: {
               email: {type: 'string'},
-              password: {type: 'string'}
-            }
-          }
+              password: {type: 'string'},
+            },
+          },
         },
       },
-    }) credentials: Credentials
+    }) credentials: Credentials,
   ): Promise<object> {
+    if(!credentials.email.match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    ))
+      throw new HttpErrors[400]('Not valid email address');
+    if(this.invalidPassword(credentials.password))
+      throw new HttpErrors[400]('Password must contains at least 10 characters');
     const user = await this.userRepository
       .findOne({ where: { email: credentials.email } });
     if(user) {
@@ -202,11 +140,15 @@ export class UserController {
         const token = this.sessionService.generateToken(user);
         user.token = token;
         await this.userRepository.updateById(user.id, user);
-        return {
-          email: credentials.email,
-          token,
-        };
-      } else throw new HttpErrors[401]("Password is invalid");
-    } else throw new HttpErrors[404]("Email not registered");
+        return { token };
+      } else throw new HttpErrors[401]('Password is invalid');
+    } else throw new HttpErrors[404]('Email not registered');
+  }
+
+  invalidPassword(pwd: string) : boolean {
+    return (pwd.length < 10)
+      || (!pwd.match(/.*[A-Z]+.*/))
+      || (!pwd.match(/.*[a-z]+.*/))
+      || (!pwd.match(/.*[!@\]#?]+.*/));
   }
 }

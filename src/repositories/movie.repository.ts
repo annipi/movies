@@ -1,7 +1,8 @@
-import {inject} from '@loopback/core';
-import {DefaultCrudRepository} from '@loopback/repository';
+import {inject, Getter} from '@loopback/core';
+import {DefaultCrudRepository, repository, BelongsToAccessor} from '@loopback/repository';
 import {DbDatasource} from '../datasources';
-import {Movie, MovieRelations} from '../models';
+import {Movie, MovieRelations, User} from '../models';
+import {UserRepository} from './user.repository';
 
 export class MovieRepository extends DefaultCrudRepository<
   Movie,
@@ -9,7 +10,11 @@ export class MovieRepository extends DefaultCrudRepository<
   MovieRelations
 > {
 
-  constructor(@inject('datasources.db') dataSource: DbDatasource) {
+  public readonly user: BelongsToAccessor<User, typeof Movie.prototype.id>;
+
+  constructor(@inject('datasources.db') dataSource: DbDatasource, @repository.getter('UserRepository') protected userRepositoryGetter: Getter<UserRepository>,) {
     super(Movie, dataSource);
+    this.user = this.createBelongsToAccessorFor('user', userRepositoryGetter,);
+    this.registerInclusionResolver('user', this.user.inclusionResolver);
   }
 }

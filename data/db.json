@@ -1,14 +1,16 @@
 {
   "ids": {
-    "User": 4
+    "User": 7
   },
   "models": {
     "User": {
-      "999": "{\"id\":999,\"email\":\"admin@mail.com\",\"password\":\"$2a$08$NHkuiXaSqtaRfPdZ2byDaurV0TCDUHaLThTJuCQlLxpXZAB4sypLm\",\"name\":\"Admin\",\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDgyODc5NTYuMjc2LCJkYXRhIjp7ImlkIjo5OTksImVtYWlsIjoiYWRtaW5AbWFpbC5jb20ifSwiaWF0IjoxNjQ4Mjg2Nzc4fQ.8pGcm1lNKggCMbDLOZnn888-efIDusdcX04_gnZw54I\"}"
+      "5": "{\"email\":\"anni@mail.com\",\"password\":\"$2a$08$i2h6mYIf1Mwe0BbIIv5Fw.gptaeNGOa/y6s/BFEk3Wp.Nhw2Aicaa\",\"name\":\"Anni\",\"id\":5}",
+      "6": "{\"email\":\"ani@mail.com\",\"password\":\"$2a$08$3BzwCH6MoyPAEFJTp.5vWO9DCWlUyjvDrtyYryYJOxrFI043bf5aO\",\"name\":\"Anni\",\"id\":6}",
+      "999": "{\"id\":999,\"email\":\"admin@mail.com\",\"password\":\"$2a$08$NHkuiXaSqtaRfPdZ2byDaurV0TCDUHaLThTJuCQlLxpXZAB4sypLm\",\"name\":\"Admin\",\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDgyOTE4ODEuNTgxLCJkYXRhIjp7ImlkIjo5OTksImVtYWlsIjoiYWRtaW5AbWFpbC5jb20ifSwiaWF0IjoxNjQ4MjkwNzE2fQ.cq5jdZzMJnokC4ncS6eufT9T18h7rlvaZBrN_zDo7NM\"}"
     },
     "Movie": {
-      "999": {
-        "id": 999,
+      "990": {
+        "id": 990,
         "title": "Beetlejuice",
         "director": "Tim Burton",
         "cast": [
@@ -41,6 +43,87 @@
         "synopsis": "Un matrimonio de fantasmas (Geena Davis y Alec Baldwin) contrata los servicios de Bitelchus (Michael Keaton), un especialista en asustar mortales, para que ahuyente a los nuevos propietarios de su querida casa Victoriana.",
         "duration": 92,
         "year": 1988
+      },
+      "991": {
+        "id": 991,
+        "title": "",
+        "director": "",
+        "cast": [],
+        "synopsis": "",
+        "duration": 0,
+        "year": 0
+      },
+      "992": {
+        "id": 992,
+        "title": "",
+        "director": "",
+        "cast": [],
+        "synopsis": "",
+        "duration": 0,
+        "year": 0
+      },
+      "993": {
+        "id": 993,
+        "title": "",
+        "director": "",
+        "cast": [],
+        "synopsis": "",
+        "duration": 0,
+        "year": 0
+      },
+      "994": {
+        "id": 994,
+        "title": "",
+        "director": "",
+        "cast": [],
+        "synopsis": "",
+        "duration": 0,
+        "year": 0
+      },
+      "995": {
+        "id": 995,
+        "title": "",
+        "director": "",
+        "cast": [],
+        "synopsis": "",
+        "duration": 0,
+        "year": 0
+      },
+      "996": {
+        "id": 996,
+        "title": "",
+        "director": "",
+        "cast": [],
+        "synopsis": "",
+        "duration": 0,
+        "year": 0
+      },
+      "997": {
+        "id": 997,
+        "title": "",
+        "director": "",
+        "cast": [],
+        "synopsis": "",
+        "duration": 0,
+        "year": 0
+      },
+      "998": {
+        "id": 998,
+        "title": "",
+        "director": "",
+        "cast": [],
+        "synopsis": "",
+        "duration": 0,
+        "year": 0
+      },
+      "999": {
+        "id": 999,
+        "title": "",
+        "director": "",
+        "cast": [],
+        "synopsis": "",
+        "duration": 0,
+        "year": 0
       }
     }
   }

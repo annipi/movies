@@ -16,9 +16,9 @@ import {
   put,
   del,
   requestBody,
-  response,
+  response, HttpErrors,
 } from '@loopback/rest';
-import {Movie} from '../models';
+import {Movie, User} from '../models';
 import {MovieRepository} from '../repositories';
 import {SessionService} from '../services';
 import {service} from '@loopback/core';
@@ -37,6 +37,7 @@ export class MoviesController {
     content: {'application/json': {schema: getModelSchemaRef(Movie)}},
   })
   async create(
+    @param.header.string('token') token: typeof User.prototype.token,
     @requestBody({
       content: {
         'application/json': {
@@ -49,18 +50,9 @@ export class MoviesController {
     })
     movie: Omit<Movie, 'id'>,
   ): Promise<Movie> {
-    return this.movieRepository.create(movie);
-  }
-
-  @get('/movies/count')
-  @response(200, {
-    description: 'Movie model count',
-    content: {'application/json': {schema: CountSchema}},
-  })
-  async count(
-    @param.where(Movie) where?: Where<Movie>,
-  ): Promise<Count> {
-    return this.movieRepository.count(where);
+    if (this.sessionService.validToken(token))
+      return this.movieRepository.create(movie);
+    else throw new HttpErrors[401]("Session expired invalid token");
   }
 
   @get('/movies')
@@ -95,9 +87,12 @@ export class MoviesController {
       },
     })
     movie: Movie,
+    @param.header.string('token') token: typeof User.prototype.token,
     @param.where(Movie) where?: Where<Movie>,
   ): Promise<Count> {
-    return this.movieRepository.updateAll(movie, where);
+    if (this.sessionService.validToken(token))
+      return this.movieRepository.updateAll(movie, where);
+    else throw new HttpErrors[401]("Session expired invalid token");
   }
 
   @get('/movies/{id}')
@@ -110,10 +105,13 @@ export class MoviesController {
     },
   })
   async findById(
+    @param.header.string('token') token: typeof User.prototype.token,
     @param.path.number('id') id: number,
     @param.filter(Movie, {exclude: 'where'}) filter?: FilterExcludingWhere<Movie>
   ): Promise<Movie> {
-    return this.movieRepository.findById(id, filter);
+    if (this.sessionService.validToken(token))
+      return this.movieRepository.findById(id, filter);
+    else throw new HttpErrors[401]("Session expired invalid token");
   }
 
   @patch('/movies/{id}')
@@ -121,6 +119,7 @@ export class MoviesController {
     description: 'Movie PATCH success',
   })
   async updateById(
+    @param.header.string('token') token: typeof User.prototype.token,
     @param.path.number('id') id: number,
     @requestBody({
       content: {
@@ -131,7 +130,9 @@ export class MoviesController {
     })
     movie: Movie,
   ): Promise<void> {
-    await this.movieRepository.updateById(id, movie);
+    if (this.sessionService.validToken(token))
+      await this.movieRepository.updateById(id, movie);
+    else throw new HttpErrors[401]("Session expired invalid token");
   }
 
   @put('/movies/{id}')
@@ -139,17 +140,25 @@ export class MoviesController {
     description: 'Movie PUT success',
   })
   async replaceById(
+    @param.header.string('token') token: typeof User.prototype.token,
     @param.path.number('id') id: number,
     @requestBody() movie: Movie,
   ): Promise<void> {
-    await this.movieRepository.replaceById(id, movie);
+    if (this.sessionService.validToken(token))
+      await this.movieRepository.replaceById(id, movie);
+    else throw new HttpErrors[401]("Session expired invalid token");
   }
 
   @del('/movies/{id}')
   @response(204, {
     description: 'Movie DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
-    await this.movieRepository.deleteById(id);
+  async deleteById(
+    @param.header.string('token') token: typeof User.prototype.token,
+    @param.path.number('id') id: number
+  ): Promise<void> {
+    if (this.sessionService.validToken(token))
+      await this.movieRepository.deleteById(id);
+    else throw new HttpErrors[401]("Session expired invalid token");
   }
 }
