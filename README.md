@@ -3,6 +3,10 @@
 This application is generated using [LoopBack 4 CLI](https://loopback.io/doc/en/lb4/Command-line-interface.html) with the
 [initial project layout](https://loopback.io/doc/en/lb4/Loopback-application-layout.html).
 
+## Prerequisites
+- [Node](https://nodejs.org/en/download/)
+- [Loopback](https://loopback.io/doc/en/lb4/Getting-started.html#create-a-new-project)
+
 ## Install dependencies and run the project
 
 By default, dependencies were installed when this application was generated.
