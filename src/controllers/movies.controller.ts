@@ -106,7 +106,7 @@ export class MoviesController {
     if(token) {
       const logInUser = await this.userRepository.findUserByToken(token);
       if (logInUser) {
-        return this.movieRepository.find();
+        return this.movieRepository.find({ where: { or:[{userId: logInUser.id }, {isPublic: true }]}});
       } else return publicMovies;
     }
     return publicMovies;

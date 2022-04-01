@@ -1,7 +1,7 @@
 {
   "ids": {
     "User": 2,
-    "Movie": 5
+    "Movie": 6
   },
   "models": {
     "User": {
